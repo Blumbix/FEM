@@ -17,6 +17,8 @@ void readFile() {
 	file >> Data.nH;
 	file >> Data.nW;
 	file >> Univ.Npc;
+	file >> Univ.Cw;
+	file >> Univ.Ro;
 	Univ.fill();
 	for (int i = 0; i < Univ.Npc*Univ.Npc; i++) {
 		file >> Univ.Pc[i][0];
@@ -29,6 +31,8 @@ void readFile() {
 	Univ.calculate();
 	Data.nN = Data.nH * Data.nW;
 	Data.nE = (Data.nH - 1) * (Data.nW - 1);
+	Data.dX = Data.W / (Data.nW - 1);
+	Data.dY = Data.H / (Data.nH - 1);
 }
 
 int main()
@@ -48,5 +52,8 @@ int main()
 	cout << "\nN1 dla 1. pkt.calk.:\n" << Univ.tab_N[0][0] << endl;
 	cout << "\ndN1 po dKsi dla 1. pkt.calk.:\n" << Univ.dN_dKsi[0][0];
 	cout << "\ndN1 po dEta dla 1. pkt.calk.:\n" << Univ.dN_dEta[0][0];
+
+	cout << "\n1. Node, H[0][1]:\t" << g.nodes[0].H[0][1];
+	cout << "\n1. Node, C[0][1]:\t" << g.nodes[0].C[0][1] << endl;
 	return 0;
 }
