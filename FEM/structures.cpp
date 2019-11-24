@@ -60,7 +60,7 @@ void Grid::fillGrid() {
 			n++;
 		}
 	}
-	int x = 1;
+	int x = 0;
 	for (int i = 0; i < Data.nE; i++) {
 		if (i % (Data.nH - 1) == 0 && i != 0) x++;
 		elements[i].ID[0] = i + x;
@@ -69,13 +69,13 @@ void Grid::fillGrid() {
 		elements[i].ID[3] = elements[i].ID[0] + 1;
 	}
 
-	for (int i = 0; i < Data.nN; i++) {
-		nodes[i].calculate();
+	for (int i = 0; i < Data.nE; i++) {
+		elements[i].calculate(nodes);
 	}
 }
 
 
-void Node::calculate() {
+void Element::calculate(Node *nodes) {
 	int n = Univ.Npc * Univ.Npc;
 	double*** tempH = new double** [n];
 	double*** tempC = new double** [n];
@@ -108,22 +108,22 @@ void Node::calculate() {
 	}
 
 	for (int i = 0; i < n; i++) {
-		dX_dKsi[i] = Univ.dN_dKsi[0][i] * (x * Data.dX) +
-			Univ.dN_dKsi[1][i] * (x * Data.dX + Data.dX) +
-			Univ.dN_dKsi[2][i] * (x * Data.dX + Data.dX) +
-			Univ.dN_dKsi[3][i] * (x * Data.dX);
-		dX_dEta[i] = Univ.dN_dEta[0][i] * (x * Data.dX) +
-			Univ.dN_dEta[1][i] * (x * Data.dX + Data.dX) +
-			Univ.dN_dEta[2][i] * (x * Data.dX + Data.dX) +
-			Univ.dN_dEta[3][i] * (x * Data.dX);
-		dY_dEta[i] = Univ.dN_dEta[0][i] * (y * Data.dY) +
-			Univ.dN_dEta[1][i] * (y * Data.dY) +
-			Univ.dN_dEta[2][i] * (y * Data.dY + Data.dY) +
-			Univ.dN_dEta[3][i] * (y * Data.dY + Data.dY);
-		dY_dKsi[i] = Univ.dN_dKsi[0][i] * (y * Data.dY) +
-			Univ.dN_dKsi[1][i] * (y * Data.dY) +
-			Univ.dN_dKsi[2][i] * (y * Data.dY + Data.dY) +
-			Univ.dN_dKsi[3][i] * (y * Data.dY + Data.dY);
+		dX_dKsi[i] = Univ.dN_dKsi[0][i] * (nodes[ID[0]].x * Data.dX) +
+			Univ.dN_dKsi[1][i] * (nodes[ID[1]].x * Data.dX) +
+			Univ.dN_dKsi[2][i] * (nodes[ID[2]].x * Data.dX) +
+			Univ.dN_dKsi[3][i] * (nodes[ID[3]].x * Data.dX);
+		dX_dEta[i] = Univ.dN_dEta[0][i] * (nodes[ID[0]].x * Data.dX) +
+			Univ.dN_dEta[1][i] * (nodes[ID[1]].x * Data.dX) +
+			Univ.dN_dEta[2][i] * (nodes[ID[2]].x * Data.dX) +
+			Univ.dN_dEta[3][i] * (nodes[ID[3]].x * Data.dX);
+		dY_dEta[i] = Univ.dN_dEta[0][i] * (nodes[ID[0]].y * Data.dY) +
+			Univ.dN_dEta[1][i] * (nodes[ID[1]].y * Data.dY) +
+			Univ.dN_dEta[2][i] * (nodes[ID[2]].y * Data.dY) +
+			Univ.dN_dEta[3][i] * (nodes[ID[3]].y * Data.dY);
+		dY_dKsi[i] = Univ.dN_dKsi[0][i] * (nodes[ID[0]].y * Data.dY) +
+			Univ.dN_dKsi[1][i] * (nodes[ID[1]].y * Data.dY) +
+			Univ.dN_dKsi[2][i] * (nodes[ID[2]].y * Data.dY) +
+			Univ.dN_dKsi[3][i] * (nodes[ID[3]].y * Data.dY);
 	}
 
 	for (int i = 0; i < n; i++) {
@@ -137,8 +137,8 @@ void Node::calculate() {
 	for (int m = 0; m < n; m++) {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				tempH[m][i][j] = dN_dX[i][m] * dN_dX[j][m] + dN_dY[i][m] * dN_dY[j][m];
-				tempC[m][i][j] = Univ.Cw * Univ.Ro * Univ.tab_N[i][m] * Univ.tab_N[j][m];
+				tempH[m][i][j] = Data.k * (dN_dX[i][m] * dN_dX[j][m] + dN_dY[i][m] * dN_dY[j][m]);
+				tempC[m][i][j] = Data.Cw * Data.Ro * Univ.tab_N[i][m] * Univ.tab_N[j][m];
 			}
 		}
 	}

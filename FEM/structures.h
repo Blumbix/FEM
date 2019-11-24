@@ -3,13 +3,12 @@
 using namespace std;
 
 struct GlobalData {
-	float H, W, dX, dY;
+	double H, W, dX, dY, Cw, Ro, k;
 	int nH, nW, nN, nE, Npc;
 };
 
 struct El_Universal {
 	int Npc;
-	double Cw, Ro;
 	double** Pc, ** Wc;
 	double** tab_N, ** dN_dKsi, ** dN_dEta;
 
@@ -21,14 +20,13 @@ struct Node {
 	int x, y;
 	double T;
 	bool BC;
-
-	double** H;
-	double** C;
-	void calculate();
 };
 
 struct Element {
 	int ID[4];
+	double** H;
+	double** C;
+	void calculate(Node *);
 };
 
 struct Grid {
