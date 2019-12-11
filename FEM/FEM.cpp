@@ -92,13 +92,13 @@ void step(Grid &g, double* t0) {
 		P_roof[i] = g.P[i] + C_new;
 	}
 
-	cout << "\nMacierz H dach:\n";
+	/*cout << "\nMacierz H dach:\n";
 	for (int i = 0; i < Data.nN; i++) {
 		for (int j = 0; j < Data.nN; j++) {
 			cout << setw(10) <<  H_roof[i][j] << "  ";
 		}
 		cout << "\n";
-	}
+	}*/
 
 	cout << "\nWektor P dach:\n";
 	for (int i = 0; i < Data.nN; i++) {
@@ -164,10 +164,10 @@ int main()
 
 	double* t = new double[Data.nN];
 	for (int i = 0; i < Data.nN; i++)
-		t[i] = 100;
+		t[i] = Data.T0;
 
-	for (int i = 0; i < 10; i++) {
-		cout << "\n\nIteracja "<<i<<".\n";
+	for (int i = Data.dTau; i <= Data.time; i+=Data.dTau) {
+		cout << "\n\nIteracja "<<i/Data.dTau<<". czas: "<<i<<"s\n";
 		step(g, t);
 	}
 
