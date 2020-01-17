@@ -76,10 +76,8 @@ double* gauss(int n, double** AB, double* X) {
 
 void step(Grid &g, double* t0) {
 	double** H_roof = new double* [Data.nN];
-	double** X = new double* [Data.nN];
 	for (int i = 0; i < Data.nN; i++) {
 		H_roof[i] = new double[Data.nN];
-		X[i] = new double[Data.nN];
 	}
 	double* P_roof = new double[Data.nN];
 
@@ -117,7 +115,7 @@ void step(Grid &g, double* t0) {
 		}
 	}
 	for (int i = 0; i < Data.nN; i++) {
-		AB[i][16] = P_roof[i];
+		AB[i][Data.nN] = P_roof[i];
 	}
 
 	t0 = gauss(Data.nN, AB, t0);
@@ -139,6 +137,7 @@ int main()
 	Grid g;
 	g.fillGrid();
 	g.calculate();
+
 	
 	cout << "\nMacierz H globalna:\n";
 	for (int i = 0; i < Data.nN; i++) {

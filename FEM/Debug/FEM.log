@@ -1,4 +1,4 @@
 ﻿  FEM.cpp
-C:\Users\Blumbix\source\repos\FEM\FEM\FEM.cpp(169,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Blumbix\source\repos\FEM\FEM\FEM.cpp(169,54): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Blumbix\source\repos\FEM\FEM\FEM.cpp(168,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Blumbix\source\repos\FEM\FEM\FEM.cpp(168,54): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
   FEM.vcxproj -> C:\Users\Blumbix\source\repos\FEM\Debug\FEM.exe
